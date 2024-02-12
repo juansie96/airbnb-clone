@@ -1,5 +1,3 @@
 export default function Home() {
-  return (
-    <h1 className="text-rose-500 text-2xl">Airbnb</h1>
-  );
+  return <h1 className='text-2xl text-rose-500'>Airbnb</h1>;
 }
