@@ -60,7 +60,7 @@ const Modal = ({
     secondaryAction();
   }, [disabled, secondaryAction]);
 
-  if (!open) {
+  if (!isOpen) {
     return null;
   }
 
@@ -76,15 +76,15 @@ const Modal = ({
               relative
               flex
               h-full
-              w-full 
-              flex-col 
-              rounded-lg 
-              border-0 
+              w-full
+              flex-col
+              rounded-lg
+              border-0
               bg-white
-              shadow-lg 
-              outline-none 
-              focus:outline-none 
-              md:h-auto 
+              shadow-lg
+              outline-none
+              focus:outline-none
+              md:h-auto
               lg:h-auto'
           >
             {/* HEADER */}
