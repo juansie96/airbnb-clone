@@ -7,7 +7,7 @@ import Button from '../Button';
 interface ModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit?: () => void;
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
@@ -15,6 +15,7 @@ interface ModalProps {
   disabled?: boolean;
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
+  formId?: string;
 }
 
 const Modal = ({
@@ -28,6 +29,7 @@ const Modal = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
+  formId,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -46,12 +48,15 @@ const Modal = ({
     }, 300);
   }, [onClose, disabled]);
 
-  const handleSubmit = useCallback(() => {
-    if (disabled) {
-      return;
-    }
-    onSubmit();
-  }, [disabled, onSubmit]);
+  const handleSubmit = onSubmit
+    ? useCallback(() => {
+        if (!onSubmit) return null;
+        if (disabled) {
+          return;
+        }
+        onSubmit();
+      }, [disabled, onSubmit])
+    : () => null;
 
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
@@ -112,8 +117,10 @@ const Modal = ({
                 )}
                 <Button
                   disabled={disabled}
-                  onClick={handleSubmit}
+                  onClick={onSubmit ? handleSubmit : () => null}
                   label={actionLabel}
+                  formId={formId}
+                  type={formId ? 'submit' : 'button'}
                 />
               </div>
             </div>
