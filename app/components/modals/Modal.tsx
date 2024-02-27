@@ -48,15 +48,13 @@ const Modal = ({
     }, 300);
   }, [onClose, disabled]);
 
-  const handleSubmit = onSubmit
-    ? useCallback(() => {
-        if (!onSubmit) return null;
-        if (disabled) {
-          return;
-        }
-        onSubmit();
-      }, [disabled, onSubmit])
-    : () => null;
+  const handleSubmit = useCallback(() => {
+    if (!onSubmit) return null;
+    if (disabled) {
+      return;
+    }
+    onSubmit();
+  }, [disabled, onSubmit]);
 
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
@@ -123,6 +121,9 @@ const Modal = ({
                   type={formId ? 'submit' : 'button'}
                 />
               </div>
+              {/* Separator */}
+              <div className='my-3 h-px w-full bg-neutral-300' />
+              {footer}
             </div>
           </div>
         </div>

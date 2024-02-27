@@ -6,6 +6,11 @@ import { useState } from 'react';
 import axios from 'axios';
 import Heading from '../Heading';
 import Input from '../Input';
+import toast from 'react-hot-toast';
+import Button from '../Button';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface RegisterFormValues {
   email: string;
@@ -35,7 +40,7 @@ const RegisterModal = () => {
         onClose();
       })
       .catch((error: unknown) => {
-        console.error(error);
+        toast.error('Something went wrong');
       })
       .finally(() => {
         setIsLoading(false);
@@ -43,41 +48,66 @@ const RegisterModal = () => {
   };
 
   const body = (
-    <form
-      onSubmit={handleSubmit(handleRegisterSubmit)}
-      className='flex flex-col gap-4'
-      id={FORM_ID}
-      autoComplete='off'
-    >
-      <Heading title='Welcome to Airbnb' subtitle='Create an account!' />
-      <Input
-        id='email'
-        type='email'
-        register={register}
-        label='Email'
-        errors={errors}
-        disabled={isLoading}
-        required
+    <>
+      <form
+        onSubmit={handleSubmit(handleRegisterSubmit)}
+        className='flex flex-col gap-4'
+        id={FORM_ID}
+        autoComplete='off'
+      >
+        <Heading title='Welcome to Airbnb' subtitle='Create an account!' />
+        <Input
+          id='email'
+          type='email'
+          register={register}
+          label='Email'
+          errors={errors}
+          disabled={isLoading}
+          required
+        />
+        <Input
+          id='name'
+          type='name'
+          register={register}
+          label='Name'
+          errors={errors}
+          disabled={isLoading}
+          required
+        />
+        <Input
+          id='password'
+          type='password'
+          register={register}
+          label='Password'
+          errors={errors}
+          disabled={isLoading}
+          required
+        />
+      </form>
+    </>
+  );
+
+  const footer = (
+    <div className='flex flex-col gap-4'>
+      <Button
+        label='Continue with Google'
+        outline
+        onClick={() => alert('GGL')}
+        icon={FcGoogle}
       />
-      <Input
-        id='name'
-        type='name'
-        register={register}
-        label='Name'
-        errors={errors}
-        disabled={isLoading}
-        required
+      <Button
+        label='Continue with Github'
+        outline
+        onClick={() => alert('GH')}
+        icon={FaGithub}
       />
-      <Input
-        id='password'
-        type='password'
-        register={register}
-        label='Password'
-        errors={errors}
-        disabled={isLoading}
-        required
-      />
-    </form>
+      <div className='mt-4 flex justify-center gap-1.5 font-light'>
+        <p className='text-neutral-500'>Already have an account?</p>{' '}
+        <Link href='/login' className=''>
+          Log in
+        </Link>
+      </div>
+    </div>
   );
 
   return (
@@ -89,6 +119,7 @@ const RegisterModal = () => {
       title='Register'
       disabled={isLoading}
       formId={FORM_ID}
+      footer={footer}
     />
   );
 };
